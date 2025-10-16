@@ -3,6 +3,7 @@ import * as utils from './utils'
 import { getTextDelimiter } from './motion';
 import axios from 'axios'; 
 import { DocumentParser } from './parser';
+import { SupportedParserLangIds } from './consts';
 const BAIDU_MAX_QUERY_LEN = 548;
 const delayInterval = 600; //ms
 /**
@@ -62,8 +63,7 @@ export function spellCheck(context: vscode.ExtensionContext) {
     if (!activeEditor) {
         return;
     }
-    const fileName = activeEditor.document.fileName;
-    if(!fileName.toLocaleLowerCase().endsWith('.txt')) {
+    if (SupportedParserLangIds.indexOf(activeEditor.document.languageId) < 0) {
         return;
     }
     const diagnosticCollection = utils.DltxtDiagCollectionSpellcheck;

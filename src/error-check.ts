@@ -5,6 +5,7 @@ import { shouldSkipChecking } from './utils';
 import { getTextDelimiter } from './motion';
 import * as iconv from "iconv-lite";
 import { dictTree, getDecorationsOnAllLines } from './simpletm';
+import { SupportedParserLangIds } from './consts';
 const AhoCorasick = require('ahocorasick');
 
 // not used yet, can be used to diagnostic 
@@ -172,8 +173,7 @@ export function updateErrorDecorations() {
     if (!activeEditor) {
         return;
     }
-    const fileName = activeEditor.document.fileName;
-    if(!fileName.toLocaleLowerCase().endsWith('.txt')) {
+    if (SupportedParserLangIds.indexOf(activeEditor.document.languageId) < 0) {
         return;
     }
     DltxtDiagCollection.set(activeEditor.document.uri, undefined);
